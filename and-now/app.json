@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "and-now",
+    "slug": "and-now",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
