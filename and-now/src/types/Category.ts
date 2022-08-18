@@ -1,0 +1,1 @@
+export type Category = '' | 'CarnesOvos' | 'Peixes' | 'Carboidratos' | 'Condimentos' | 'Laticinios' | 'Graos';
