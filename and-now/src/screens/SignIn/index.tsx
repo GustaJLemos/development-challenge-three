@@ -7,8 +7,17 @@ import { styles } from './styles';
 import { Typography } from '../../components/molecules/Typography';
 import { responsiveSize } from '../../utils/responsiveSize';
 import { Button } from '../../components/molecules/Button';
+import { useContext } from 'react';
+import { AuthContext } from '../../contexts/Auth';
+import { useNavigation } from '@react-navigation/native';
 
 export function SignIn() {
+  const { setIsLogged } = useContext(AuthContext);
+
+  function handleSignIn() {
+    setIsLogged(true);
+  }
+
   return (
     <>
       <StatusBar 
@@ -18,16 +27,16 @@ export function SignIn() {
       />
       <BackgroundWrapper>
         <LandingBackgroundSvg />
-        <Typography textType='title' style={{marginTop: responsiveSize(-8)}} textColor={COLORS.salmon10}>
+        <Typography textType='title' mt={responsiveSize(-8)} textColor={COLORS.salmon10} style={{fontSize: responsiveSize(3)}}>
           E agora?
         </Typography>  
-        <Typography style={{fontSize: responsiveSize(2), marginBottom: responsiveSize(1)}}>
+        <Typography mb={responsiveSize(1)} style={{fontSize: responsiveSize(2)}}>
           O melhor jeito de {'\n'}
           descobrir receitas {'\n'}
           com os ingredientes {'\n'}
           disponíveis!
         </Typography>
-        <Button>
+        <Button onPress={handleSignIn}>
           <Typography>
             Vamos começar
           </Typography>
