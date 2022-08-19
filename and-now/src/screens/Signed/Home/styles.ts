@@ -2,7 +2,7 @@ import { Dimensions, StyleSheet } from 'react-native';
 import { COLORS } from '../../../global/styles';
 import { responsiveSize } from '../../../utils/responsiveSize';
 
-const {width} = Dimensions.get('screen');
+const { width, height } = Dimensions.get('screen');
 
 export const styles = StyleSheet.create({
   container: {
@@ -27,5 +27,14 @@ export const styles = StyleSheet.create({
   categorieItensContent: {
     paddingRight: responsiveSize(2),
 
+  },
+  actionSheetContent: {
+    width: width,
+    height: height / 2,
+    paddingVertical: responsiveSize(2),
+
+    backgroundColor: COLORS.white10,
+    borderTopRightRadius: 24,
+    borderTopLeftRadius: 24,
   }
 });
