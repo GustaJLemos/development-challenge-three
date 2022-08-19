@@ -1,9 +1,9 @@
 import { ElementType } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { SvgProps } from 'react-native-svg';
-import { COLORS } from '../../global/styles';
-import { responsiveSize } from '../../utils/responsiveSize';
-import { Typography } from '../molecules/Typography';
+import { COLORS } from '../../../global/styles';
+import { responsiveSize } from '../../../utils/responsiveSize';
+import { Typography } from '../../molecules/Typography';
 
 import { styles } from './styles';
 
