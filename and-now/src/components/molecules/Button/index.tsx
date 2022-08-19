@@ -12,9 +12,9 @@ type Props = TouchableOpacityProps & {
 export function Button({children, buttonColor = COLORS.salmon10, ...rest}: Props) {
   return (
     <TouchableOpacity 
-      style={[styles.container, {backgroundColor: buttonColor}]} 
       activeOpacity={0.9}
       {...rest}
+      style={[styles.container, {backgroundColor: buttonColor}, rest.style]} 
     >
       {children}
     </TouchableOpacity>
