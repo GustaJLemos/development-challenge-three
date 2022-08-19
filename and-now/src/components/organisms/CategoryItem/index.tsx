@@ -9,21 +9,25 @@ import { responsiveSize } from '../../../utils/responsiveSize';
 
 type Props = {
   item: Item;
-  selectItem: (itemSelected: Item) => void;
+  // selectItem: (itemSelected: Item) => void;
   // selectedItem: number;
   // checked: boolean;
 }
 
-export function CategoryItem({item, selectItem}: Props) {
-  const [selectedItem, setSelectedItem] = useState();
+export function CategoryItem({item}: Props) {
+  const [selectedItem, setSelectedItem] = useState<Item>();
+  const [checked, setCheck] = useState<boolean>();
 
-  const checked = true;
+  function handleSelectItem(item: Item) {
+    selectedItem === item ? setSelectedItem(null) : setSelectedItem(item)
+    selectedItem == item ? setCheck(false) : setCheck(true);
+  }
 
   return (
     <TouchableOpacity 
       style={[styles.container, {backgroundColor: checked ? COLORS.blue1 : COLORS.white100}]}
       activeOpacity={0.8}
-      onPress={() => selectItem(item)}
+      onPress={() => handleSelectItem(item)}
     >
       <View style={styles.img}>
         {item.img}
