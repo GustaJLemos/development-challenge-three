@@ -20,6 +20,7 @@ import ActionSheet, { SheetManager } from 'react-native-actions-sheet';
 import { ItemList } from '../../../types/ItemList';
 import { CategoryItem } from '../../../components/organisms/CategoryItem';
 import { Item } from '../../../types/Item';
+import { ListItems } from '../../../components/organisms/ListItems';
 
 const ITENS_LIST: ItemList[] = [
   {
@@ -71,6 +72,12 @@ const ITENS = {
     {
       id: 3,
       item: 'Ovo',
+      quantidade: 0,
+      img: <CarnesOvosSvg />,
+    },
+    {
+      id: 4,
+      item: 'Carne de gado',
       quantidade: 0,
       img: <CarnesOvosSvg />,
     },
@@ -223,30 +230,9 @@ export function Home() {
         containerStyle={styles.actionSheetContent}
         onClose={() => setSelectedCategory('')}
       > 
-        <Typography 
-          textType='title' 
-          textColor={COLORS.black} 
-          ml={responsiveSize(2)} 
-        >
-          Selecione os itens
-        </Typography>
-        <FlatList
-          data={ITENS[selectedCategory]}
-          keyExtractor={(item) => item.id}
-          renderItem={({item}) => {
-            return (
-            <CategoryItem 
-              key={item.id}
-              item={item}
-              selectItem={(itemSelected) => handleSelectItemById(itemSelected)}
-              // selectedItem={selectedItems}
-              // checked={item.id === selectedItems[0].id}
-            />
-            )
-          }}
-        >
-          
-        </FlatList>
+        <ListItems 
+          categoryItem={ITENS[selectedCategory]}
+        />
       </ActionSheet>
       {/* </View> */}
     </View> 
