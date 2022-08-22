@@ -1,5 +1,6 @@
-import React from 'react';
-import { FlatList, View } from 'react-native';
+import React, { useState } from 'react';
+import { FlatList, ScrollView } from 'react-native';
+import { SheetManager } from 'react-native-actions-sheet';
 import { COLORS } from '../../../global/styles';
 import { Item } from '../../../types/Item';
 import { responsiveSize } from '../../../utils/responsiveSize';
@@ -9,44 +10,68 @@ import { CategoryItem } from '../CategoryItem';
 
 type Props = {
   categoryItem: Item[];
+  selectedItens: (itens: Item[]) => void;
 }
 
-export function ListItems({categoryItem}: Props) {
+export function ListItems({categoryItem, selectedItens}: Props) {
+  const [itens, setItens] = useState<Item[]>([]);
+
+  function saveSelectedItem(item: Item) {
+    // const newItem: Item = item
+      // const newArray: Item[] = [itens, newItem]
+    setItens([...itens, item])
+  }
+
+  function unsaveSelectedItem(item: Item) {
+    const newItens = itens.filter(arrayItem => {
+      if(arrayItem !== item) {
+        return arrayItem;
+      }
+    })
+    // const newItem: Item = item
+      // const newArray: Item[] = [itens, newItem]
+    setItens(newItens)
+  }
+
+  function handleSendItensSelected() {
+    selectedItens(itens);
+    SheetManager.hideAll();
+  }
+
   return (
     <>
-      <Typography 
-        textType='title' 
-        textColor={COLORS.black} 
-        ml={responsiveSize(2)} 
+      <Typography
+        textType='title'
+        textColor={COLORS.black10}
+        ml={responsiveSize(2)}
       >
         Selecione os itens
       </Typography>
-      <FlatList
-        data={categoryItem}
-        keyExtractor={(item) => String(item.id)}
-        style={{ maxHeight: responsiveSize(24) }}
+        <ScrollView
+          style={{ height: responsiveSize(24) }}
+        >
+          {categoryItem.map((item) => {
+            return (
+              <CategoryItem
+                key={item.id}
+                item={item}
+                itemSelected={(item) => saveSelectedItem(item)}
+                itemToDeselect={(item) => unsaveSelectedItem(item)}
+                // selectItem={(itemSelected) => handleSelectItemById(itemSelected)}
+                // selectedItem={selectedItems}
+                // checked={item.id === selectedItems[0].id}
+              />
+              )
+          })
+          }
 
-        // contentContainerStyle={{backgroundColor: 'yellow', maxHeight: responsiveSize(40)}}
-        ItemSeparatorComponent={() => {
-          return (
-            <View style={{marginBottom: responsiveSize(0.1)}} />
-          )
-        }}
-        renderItem={({item}) => {
-          return (
-          <CategoryItem 
-            key={item.id}
-            item={item}
-            // selectItem={(itemSelected) => handleSelectItemById(itemSelected)}
-            // selectedItem={selectedItems}
-            // checked={item.id === selectedItems[0].id}
-          />
-          )
-        }}
-      />
-      <Button style={{ alignSelf: 'center', marginTop: responsiveSize(1) }}>
+        </ScrollView>
+      <Button
+        style={{ alignSelf: 'center', marginTop: responsiveSize(1) }}
+        onPress={() => handleSendItensSelected()}
+      >
         <Typography>
-          Buscar receitas
+          Confirmar
         </Typography>
       </Button>
     </>
