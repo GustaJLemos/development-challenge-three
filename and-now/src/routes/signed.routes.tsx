@@ -10,6 +10,7 @@ export const SignedRoutes = () => {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
+        animation: 'none',
         contentStyle: {
           backgroundColor: COLORS.white10
         }
