@@ -1,6 +1,7 @@
 export type Item = {
   id: number;
-  item: string;
+  itemName: string;
   quantidade: number;
+  tipoQuantidade: string,
   img: JSX.Element;
 }
