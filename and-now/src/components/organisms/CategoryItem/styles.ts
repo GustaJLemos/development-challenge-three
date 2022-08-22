@@ -4,13 +4,15 @@ import { responsiveSize } from '../../../utils/responsiveSize';
 export const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: responsiveSize(7),
+    paddingVertical: responsiveSize(0.5),
+    // height: responsiveSize(7),
     paddingHorizontal: responsiveSize(2),
+    marginBottom: responsiveSize(0.5),
 
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between'
-  }, 
+  },
   img: {
     width: '20%',
 
