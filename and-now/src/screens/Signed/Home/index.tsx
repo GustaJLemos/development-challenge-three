@@ -1,11 +1,18 @@
-import { FlatList, Image, ScrollView, View } from 'react-native';
+import { useState } from 'react';
 
-import Logo from '../../../assets/Logo.svg';
+import { Dimensions, FlatList, Modal, ScrollView, View } from 'react-native';
+import ActionSheet, { SheetManager } from 'react-native-actions-sheet';
+
 import { CategoryCard } from '../../../components/organisms/CategoryCard';
 import { Card } from '../../../components/molecules/Card';
 import { Typography } from '../../../components/molecules/Typography';
-import { COLORS } from '../../../global/styles';
+import { Button } from '../../../components/molecules/Button';
+import { ListItems } from '../../../components/organisms/ListItems';
+import { ItemQuantity } from '../../../components/organisms/ItemQuantity';
+import { CategoryItem } from '../../../components/organisms/CategoryItem';
 import { responsiveSize } from '../../../utils/responsiveSize';
+
+import { COLORS } from '../../../global/styles';
 import CarnesOvosSvg from '../../../assets/CarnesOvos.svg'
 import FishSvg from '../../../assets/Fish.svg'
 import PaoArrozSvg from '../../../assets/PaoArroz.svg'
@@ -13,42 +20,51 @@ import CondimentosSvg from '../../../assets/Condimentos.svg'
 import LeiteQueijoSvg from '../../../assets/LeiteQueijo.svg'
 import GraosSvg from '../../../assets/Graos.svg'
 import { styles } from './styles';
-import { useState } from 'react';
-import { Category } from '../../../types/Category';
-import { Button } from '../../../components/molecules/Button';
-import ActionSheet, { SheetManager } from 'react-native-actions-sheet';
-import { ItemList } from '../../../types/ItemList';
-import { CategoryItem } from '../../../components/organisms/CategoryItem';
-import { Item } from '../../../types/Item';
-import { ListItems } from '../../../components/organisms/ListItems';
 
-const ITENS_LIST: ItemList[] = [
+import { Category } from '../../../types/Category';
+import { ItemList } from '../../../types/ItemList';
+import { Item } from '../../../types/Item';
+import { recipeService } from '../../../http/services/recipeService';
+import { RequestItem } from '../../../http/types/RequestItem';
+import { Recipe } from '../../../types/Recipe';
+import { Loading } from '../../../components/atoms/Loading';
+import { Logo } from '../../../components/atoms/Logo';
+import { RecipeList } from '../../../components/pages/RecipeList';
+import PratoMacarraoSvg from '../../../assets/PratoMacarrao.svg';
+
+const ITENS_CATEGORY_LIST: ItemList[] = [
   {
+    id: 1,
     text: 'Carnes e ovos',
     image: <CarnesOvosSvg />,
     category: 'CarnesOvos',
   },
   {
+    id: 2,
     text: 'Peixes',
     image: <FishSvg />,
     category: 'Peixes',
   },
   {
+    id: 3,
     text: 'Carboidratos',
     image: <PaoArrozSvg />,
     category: 'Carboidratos',
   },
   {
+    id: 4,
     text: 'Condimentoss',
     image: <CondimentosSvg />,
     category: 'Condimentos',
   },
   {
+    id: 5,
     text: 'Laticínios e derivados',
     image: <LeiteQueijoSvg />,
     category: 'Laticinios',
   },
   {
+    id: 6,
     text: 'Grãos',
     image: <GraosSvg />,
     category: 'Graos',
@@ -59,149 +75,261 @@ const ITENS = {
   CarnesOvos: [
     {
       id: 1,
-      item: 'Carne boa',
+      itemName: 'Carne boa',
       quantidade: 0,
+      tipoQuantidade: 'g',
       img: <CarnesOvosSvg />,
     },
     {
       id: 2,
-      item: 'Carne moida',
+      itemName: 'Carne moida',
       quantidade: 0,
+      tipoQuantidade: 'g',
       img: <CarnesOvosSvg />,
     },
     {
       id: 3,
-      item: 'Ovo',
+      itemName: 'Ovo',
       quantidade: 0,
+      tipoQuantidade: 'un',
       img: <CarnesOvosSvg />,
     },
     {
       id: 4,
-      item: 'Carne de gado',
+      itemName: 'Carne de gado',
       quantidade: 0,
+      tipoQuantidade: 'g',
       img: <CarnesOvosSvg />,
     },
   ],
   Peixes: [
     {
-      item: 'Peixe bom',
+      id: 5,
+      itemName: 'Peixe bom',
       quantidade: 0,
+      tipoQuantidade: 'g',
+      img: <FishSvg />
     },
     {
-      item: 'Baiacu',
+      id: 6,
+      itemName: 'Baiacu',
       quantidade: 0,
+      tipoQuantidade: 'g',
+      img: <FishSvg />
     },
     {
-      item: 'Bagre',
+      id: 7,
+      itemName: 'Bagre',
       quantidade: 0,
+      tipoQuantidade: 'g',
+      img: <FishSvg />
     },
   ],
   Carboidratos: [
     {
-      item: 'Pão',
+      id: 8,
+      itemName: 'Pão',
       quantidade: 0,
+      tipoQuantidade: 'un',
+      img: <PaoArrozSvg />
     },
     {
-      item: 'Arroz',
+      id: 9,
+      itemName: 'Arroz',
       quantidade: 0,
+      tipoQuantidade: 'g',
+      img: <PaoArrozSvg />
     },
     {
-      item: 'Macarrão',
+      id: 10,
+      itemName: 'Macarrão',
       quantidade: 0,
+      tipoQuantidade: 'g',
+      img: <PaoArrozSvg />
     },
   ],
   Condimentos: [
     {
-      item: 'Ketchup',
+      id: 11,
+      itemName: 'Ketchup',
       quantidade: 0,
+      tipoQuantidade: 'g',
+      img: <CondimentosSvg />
     },
     {
-      item: 'Maionese',
+      id: 12,
+      itemName: 'Maionese',
       quantidade: 0,
+      tipoQuantidade: 'g',
+      img: <CondimentosSvg />
     },
     {
-      item: 'Mostarda',
+      id: 13,
+      itemName: 'Mostarda',
       quantidade: 0,
+      tipoQuantidade: 'g',
+      img: <CondimentosSvg />
     },
     {
-      item: 'Pimenta',
+      id: 14,
+      itemName: 'Pimenta',
       quantidade: 0,
+      tipoQuantidade: 'g',
+      img: <CondimentosSvg />
+    },
+    {
+      id: 22,
+      itemName: 'Açucar',
+      quantidade: 0,
+      tipoQuantidade: 'g',
+      img: <CondimentosSvg />
     },
   ],
   Laticinios: [
     {
-      item: 'Leite',
+      id: 15,
+      itemName: 'Leite',
       quantidade: 0,
+      tipoQuantidade: 'ml',
+      img: <LeiteQueijoSvg />
     },
     {
-      item: 'Iogurte',
+      id: 16,
+      itemName: 'Iogurte',
       quantidade: 0,
+      tipoQuantidade: 'ml',
+      img: <LeiteQueijoSvg />
     },
     {
-      item: 'Queijo',
+      id: 17,
+      itemName: 'Queijo',
       quantidade: 0,
+      tipoQuantidade: 'g',
+      img: <LeiteQueijoSvg />
     },
   ],
   Graos: [
     {
-      item: 'Café',
+      id: 18,
+      itemName: 'Café',
       quantidade: 0,
+      tipoQuantidade: 'g',
+      img: <GraosSvg />
     },
     {
-      item: 'Trigo',
+      id: 19,
+      itemName: 'Trigo',
       quantidade: 0,
+      tipoQuantidade: 'g',
+      img: <GraosSvg />
     },
     {
-      item: 'Milho',
+      id: 20,
+      itemName: 'Milho',
       quantidade: 0,
+      tipoQuantidade: 'g',
+      img: <GraosSvg />
     },
     {
-      item: 'Arroz',
+      id: 21,
+      itemName: 'Arroz',
       quantidade: 0,
+      tipoQuantidade: 'g',
+      img: <GraosSvg />
     },
   ],
 }
 
+const {width} = Dimensions.get('screen')
+
 export function Home() {
+  //#region Hooks
   const [selectedCategory, setSelectedCategory] = useState<Category>('');
   const [selectedItems, setSelectedItems] = useState<Item[]>([]);
+  const [recipes, setRecipes] = useState<Recipe[]>();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [requestIsLoading, setRequestIsLoading] = useState(false);
+  //#endregion Hooks
 
+  //#region Functions
   function handleSelectCategoryAndOpenActionSheet(category: Category) {
     setSelectedCategory(category);
-    SheetManager.show('listItensByCategory_sheet') 
+    SheetManager.show('listItensByCategory_sheet')
   }
 
-  function handleSelectItemById(itemSelected: Item) {
-    setSelectedItems([itemSelected]);
+  function handleSelectItens(itens: Item[]) {
+    setSelectedItems([...selectedItems, ...itens]);
   }
+
+  function searchAndExcludeItemInArray(item: Item) {
+    const newItens = selectedItems.filter((selectedItems) => {
+      if(selectedItems !== item) {
+        return selectedItems;
+      }
+    })
+
+    setSelectedItems(newItens);
+  }
+
+  function addNewItemToArray(item: Item) {
+    const newItens = selectedItems.map((selectedItems) => {
+      if(selectedItems.id === item.id) {
+        return item;
+      }
+      selectedItems;
+    })
+
+    setSelectedItems(newItens);
+  }
+
+  function searchForRecipesWithTheseItems() {
+    setRequestIsLoading(true);
+    recipeService.searchRecipes(selectedItems)
+    .then(res => {
+      setRecipes([res]);
+      setRequestIsLoading(false);
+      setIsModalVisible(true);
+    })
+    .catch(err => {
+      setRequestIsLoading(false);
+      console.log('implementar msg de erro (talvez com actionSheet)');
+    });
+  }
+  //#endregion Functions
 
   return (
     <View style={styles.container}>
-      <View style={styles.logo}>
-        <Logo />
-      </View>
-      <Card />
-      {/* <View style={{backgroundColor: 'red', width: '100%'}}> */}
-      <Typography 
-        textType='title' 
-        textColor={COLORS.black} 
-        mt={responsiveSize(2)} 
+      <Logo />
+
+      <Card
+        title='Bem-vindo(a)'
+        text='Aqui você vai descobrir receitas
+        perfeitas para aquela hora
+        que não sabe o que fazer.'
+        img={<PratoMacarraoSvg />}
+      />
+
+      <Typography
+        textType='title'
+        textColor={COLORS.black10}
+        mt={responsiveSize(2)}
         style={{alignSelf: 'flex-start'}}
       >
-        Escolha seus ingredientes >
+        Escolha seus ingredientes
       </Typography>
-      <ScrollView 
+
+      <ScrollView
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         style={styles.categorieItensList}
         contentContainerStyle={styles.categorieItensContent}
       >
         {
-          ITENS_LIST.map((item) => {
+          ITENS_CATEGORY_LIST.map((item) => {
             return (
-              <CategoryCard 
-                key={item.text}
-                text={item.text} 
+              <CategoryCard
+                key={item.id}
+                text={item.text}
                 image={item.image}
                 selectedCategory={selectedCategory === item.category}
                 onPress={() => handleSelectCategoryAndOpenActionSheet(item.category)}
@@ -210,15 +338,35 @@ export function Home() {
           })
         }
       </ScrollView>
-      <View style={{alignItems: 'center', justifyContent: 'center', height: responsiveSize(22)}}>
-        <Typography textType='small'>
-          Para usar é super fácil!
-          basta escolher uma categoria.
-          E selecionar os itens que você
-          tem a disposição 
-        </Typography>
-      </View>
-      <Button>
+
+      <FlatList
+        data={selectedItems}
+        style={styles.flatList}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ width: width }}
+        ListEmptyComponent={
+          <View style={styles.emptyFlatList}>
+            <Typography textType='small'>
+              Para usar é super fácil!
+              basta escolher uma categoria.
+              E selecionar os itens que você
+
+              tem a disposição
+            </Typography>
+          </View>}
+        renderItem={({item}) => {
+          return (
+            <ItemQuantity
+              key={item.id}
+              item={item}
+              itemWithNewQuantity={(item) => addNewItemToArray(item)}
+              ExcludeItem={(item) => searchAndExcludeItemInArray(item)}
+            />
+          )
+        }}
+      />
+
+      <Button onPress={searchForRecipesWithTheseItems}>
         <Typography>
           Buscar receitas
         </Typography>
@@ -226,15 +374,34 @@ export function Home() {
 
       <ActionSheet
         id='listItensByCategory_sheet'
-        bounceOnOpen={true}
         containerStyle={styles.actionSheetContent}
         onClose={() => setSelectedCategory('')}
-      > 
-        <ListItems 
+        gestureEnabled={false}
+
+      >
+        <ListItems
           categoryItem={ITENS[selectedCategory]}
+          selectedItens={(itens) => handleSelectItens(itens)}
         />
       </ActionSheet>
-      {/* </View> */}
-    </View> 
+
+      {/* Modal chamada quando estamos esperando a requisição */}
+      <Modal
+        visible={requestIsLoading}
+        style={{backgroundColor: 'transparent', flex: 1}}
+      >
+        <Loading />
+      </Modal>
+
+      {/* Modal chamada quando a nossa requisição dá certo e traz as receitas */}
+      <Modal
+        visible={isModalVisible}
+      >
+        <RecipeList
+          recipes={recipes}
+          disableModal={() => setIsModalVisible(false)}
+        />
+      </Modal>
+    </View>
   );
 }

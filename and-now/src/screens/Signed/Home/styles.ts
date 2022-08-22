@@ -10,11 +10,6 @@ export const styles = StyleSheet.create({
     padding: responsiveSize(2),
     alignItems: 'center',
   },
-  logo: {
-    width: '100%',
-    marginBottom: responsiveSize(2),
-    alignItems:   'flex-start',
-  },
   image: {
     width: '100%',
     height: 360,
@@ -33,8 +28,18 @@ export const styles = StyleSheet.create({
     height: height / 2,
     paddingVertical: responsiveSize(2),
 
-    backgroundColor: COLORS.white10,
+    backgroundColor: COLORS.white100,
     borderTopRightRadius: 24,
     borderTopLeftRadius: 24,
-  }
+  },
+  flatList: {
+    width: width,
+    height: responsiveSize(20),
+    marginBottom: responsiveSize(1)
+  },
+  emptyFlatList: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: responsiveSize(22)
+  },
 });
