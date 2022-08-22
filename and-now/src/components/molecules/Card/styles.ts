@@ -5,7 +5,6 @@ import { responsiveSize } from '../../../utils/responsiveSize';
 export const styles = StyleSheet.create({
   container: {
     width: responsiveSize(33),
-    height: responsiveSize(12),
     paddingVertical: responsiveSize(1),
     paddingHorizontal: responsiveSize(2),
     borderRadius: 24,
@@ -14,6 +13,8 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   text: {
+    width: '80%',
+
     flexDirection: 'column',
     alignItems: 'center',
   }
