@@ -16,17 +16,17 @@ type Props = {
 
 export function CategoryCard({ image, text, onPress, selectedCategory }: Props) {
   return (
-    <TouchableOpacity 
+    <TouchableOpacity
       style={[styles.container, {
         backgroundColor: selectedCategory ? COLORS.blue1 : COLORS.white100
-      }]} 
-      onPress={onPress} 
+      }]}
+      onPress={onPress}
       activeOpacity={0.8 }
     >
       <View style={styles.img}>
         {image}
       </View>
-      <Typography textType='text' textColor={selectedCategory ? COLORS.white100 : COLORS.black}>
+      <Typography textType='text' textColor={selectedCategory ? COLORS.white100 : COLORS.black10}>
         {text}
       </Typography>
     </TouchableOpacity>
