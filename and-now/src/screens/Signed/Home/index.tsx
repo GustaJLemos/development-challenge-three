@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Dimensions, FlatList, Modal, ScrollView, View } from 'react-native';
 import ActionSheet, { SheetManager } from 'react-native-actions-sheet';
@@ -29,8 +29,10 @@ import { RequestItem } from '../../../http/types/RequestItem';
 import { Recipe } from '../../../types/Recipe';
 import { Loading } from '../../../components/atoms/Loading';
 import { Logo } from '../../../components/atoms/Logo';
-import { RecipeList } from '../../../components/pages/RecipeList';
+import { RecipeList } from '../RecipeList';
 import PratoMacarraoSvg from '../../../assets/PratoMacarrao.svg';
+import { useNavigation } from '@react-navigation/native';
+import { ErrorMessage } from '../../../components/atoms/ErrorMessage';
 
 const ITENS_CATEGORY_LIST: ItemList[] = [
   {
@@ -246,9 +248,9 @@ export function Home() {
   //#region Hooks
   const [selectedCategory, setSelectedCategory] = useState<Category>('');
   const [selectedItems, setSelectedItems] = useState<Item[]>([]);
-  const [recipes, setRecipes] = useState<Recipe[]>();
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedQuantityItems, setSelectedQuantityItems] = useState<Item[]>([]);
   const [requestIsLoading, setRequestIsLoading] = useState(false);
+  const navigation = useNavigation();
   //#endregion Hooks
 
   //#region Functions
@@ -258,7 +260,13 @@ export function Home() {
   }
 
   function handleSelectItens(itens: Item[]) {
-    setSelectedItems([...selectedItems, ...itens]);
+    const itemsThatNotAlreadyInTheArray = itens.filter((item) => {
+      if(selectedItems.indexOf(item) === -1) {
+        return item;
+      }
+    })
+
+    setSelectedItems([...selectedItems, ...itemsThatNotAlreadyInTheArray]);
   }
 
   function searchAndExcludeItemInArray(item: Item) {
@@ -269,33 +277,41 @@ export function Home() {
     })
 
     setSelectedItems(newItens);
+    setSelectedQuantityItems(newItens);
   }
 
   function addNewItemToArray(item: Item) {
-    const newItens = selectedItems.map((selectedItems) => {
-      if(selectedItems.id === item.id) {
-        return item;
+    const newItens = selectedItems.filter((selectedItems) => {
+      if(selectedItems.id !== item.id) {
+        return selectedItems;
       }
-      selectedItems;
     })
 
-    setSelectedItems(newItens);
+    setSelectedQuantityItems([...newItens, item]);
   }
 
   function searchForRecipesWithTheseItems() {
     setRequestIsLoading(true);
-    recipeService.searchRecipes(selectedItems)
+    recipeService.searchRecipes(selectedQuantityItems)
     .then(res => {
-      setRecipes([res]);
       setRequestIsLoading(false);
-      setIsModalVisible(true);
+      SheetManager.show('errorMessage_sheet')
+      navigation.navigate('RecipeList', { recipe: res })
     })
     .catch(err => {
       setRequestIsLoading(false);
-      console.log('implementar msg de erro (talvez com actionSheet)');
+      SheetManager.show('errorMessage_sheet')
     });
   }
   //#endregion Functions
+
+  if(requestIsLoading === true) {
+    return (
+      <Modal style={{backgroundColor: 'transparent', flex: 1}}>
+        <Loading />
+      </Modal>
+    )
+  }
 
   return (
     <View style={styles.container}>
@@ -318,6 +334,7 @@ export function Home() {
         Escolha seus ingredientes
       </Typography>
 
+      {/* Scroll com as categorias de itens */}
       <ScrollView
         horizontal={true}
         showsHorizontalScrollIndicator={false}
@@ -339,6 +356,7 @@ export function Home() {
         }
       </ScrollView>
 
+      {/* FlatList com os itens selecionados */}
       <FlatList
         data={selectedItems}
         style={styles.flatList}
@@ -366,12 +384,17 @@ export function Home() {
         }}
       />
 
-      <Button onPress={searchForRecipesWithTheseItems}>
+      <Button
+        onPress={searchForRecipesWithTheseItems}
+        disabled={!selectedItems.length}
+        style={{opacity: !selectedItems.length ? 0.8 : 1}}
+      >
         <Typography>
           Buscar receitas
         </Typography>
       </Button>
 
+      {/* Action sheet da listagem de produtos de cada categoria */}
       <ActionSheet
         id='listItensByCategory_sheet'
         containerStyle={styles.actionSheetContent}
@@ -385,23 +408,14 @@ export function Home() {
         />
       </ActionSheet>
 
-      {/* Modal chamada quando estamos esperando a requisição */}
-      <Modal
-        visible={requestIsLoading}
-        style={{backgroundColor: 'transparent', flex: 1}}
+      {/* Action sheet da mensagem de erro */}
+      <ActionSheet
+        id='errorMessage_sheet'
+        containerStyle={styles.errorActionSheet}
+        gestureEnabled={false}
       >
-        <Loading />
-      </Modal>
-
-      {/* Modal chamada quando a nossa requisição dá certo e traz as receitas */}
-      <Modal
-        visible={isModalVisible}
-      >
-        <RecipeList
-          recipes={recipes}
-          disableModal={() => setIsModalVisible(false)}
-        />
-      </Modal>
+        <ErrorMessage />
+      </ActionSheet>
     </View>
   );
 }

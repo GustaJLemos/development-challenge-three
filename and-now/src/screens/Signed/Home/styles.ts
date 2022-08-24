@@ -32,6 +32,17 @@ export const styles = StyleSheet.create({
     borderTopRightRadius: 24,
     borderTopLeftRadius: 24,
   },
+  errorActionSheet: {
+    width: width,
+    height: responsiveSize(20),
+    paddingVertical: responsiveSize(2),
+    paddingHorizontal: responsiveSize(1),
+    alignItems: 'center',
+
+    backgroundColor: COLORS.white100,
+    borderTopRightRadius: 24,
+    borderTopLeftRadius: 24,
+  },
   flatList: {
     width: width,
     height: responsiveSize(20),
