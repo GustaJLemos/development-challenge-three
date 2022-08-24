@@ -3,7 +3,6 @@ import { COLORS } from "../global/styles";
 import { Home } from "../screens/Signed/Home";
 import { RecipeDetails } from "../screens/Signed/RecipeDetails";
 import { RecipeList } from "../screens/Signed/RecipeList";
-import { SignIn } from "../screens/SignIn";
 
 const Stack = createNativeStackNavigator();
 

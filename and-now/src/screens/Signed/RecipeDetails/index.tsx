@@ -23,7 +23,7 @@ export function RecipeDetails() {
 
   function findWhichItemsAreMissing() {
     const missingItens = recipeSelected.ingredientes.filter((item) => {
-      if(recipeSelected.itensFaltantes.indexOf(item)) {
+      if(recipeSelected.itensFaltantes.indexOf(item) !== -1) {
         return item;
       }
     })
@@ -83,7 +83,7 @@ export function RecipeDetails() {
               <Typography
                 key={index}
                 textType='text'
-                textColor={missingItens.indexOf(item) ? COLORS.salmon10 : COLORS.black10}
+                textColor={item === missingItens[index] ? COLORS.salmon10 : COLORS.black10}
               >
                 - {item}
               </Typography>

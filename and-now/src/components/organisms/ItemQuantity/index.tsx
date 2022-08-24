@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import { TouchableOpacity, View, ViewProps } from 'react-native';
 import { COLORS } from '../../../global/styles';
 import { Typography } from '../../molecules/Typography';
-import { AntDesign } from '@expo/vector-icons';
 import { styles } from './styles';
 import { Item } from '../../../types/Item';
-import { responsiveSize } from '../../../utils/responsiveSize';
 import { QuantityButton } from '../../molecules/QuantityButton';
 
 type Props = ViewProps & {
@@ -33,7 +31,6 @@ export function ItemQuantity({item, itemWithNewQuantity, ExcludeItem, ...rest}: 
     <TouchableOpacity
       style={[
         styles.container,
-        // {backgroundColor: showOptions ? COLORS.black1 : COLORS.white100},
         {backgroundColor: COLORS.white100},
         rest.style
       ]}

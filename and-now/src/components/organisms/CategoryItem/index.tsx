@@ -11,9 +11,6 @@ type Props = ViewProps & {
   item: Item;
   itemSelected?: (item: Item) => void;
   itemToDeselect?: (item: Item) => void;
-  // selectItem: (itemSelected: Item) => void;
-  // selectedItem: number;
-  // checked: boolean;
 }
 
 export function CategoryItem({item, itemSelected, itemToDeselect, ...rest}: Props) {
@@ -21,13 +18,11 @@ export function CategoryItem({item, itemSelected, itemToDeselect, ...rest}: Prop
   const [checked, setCheck] = useState<boolean>();
 
   function selectItem(item: Item) {
-    // console.log(item);
     setSelectedItem(item);
     itemSelected(item);
   }
 
   function deselectItem(item: Item) {
-    // setSelectedItem(null);
     setSelectedItem(null);
     itemToDeselect(item);
   }

@@ -5,11 +5,9 @@ import { Recipe } from '../../../types/Recipe';
 import { Logo } from '../../../components/atoms/Logo';
 import { Card } from '../../../components/molecules/Card';
 import { Typography } from '../../../components/molecules/Typography';
-import ConfirmSvg from '../../../assets/Confirm.svg';
 import { Feather } from '@expo/vector-icons';
 import { styles } from './styles';
 import { responsiveSize } from '../../../utils/responsiveSize';
-import { Loading } from '../../../components/atoms/Loading';
 import { GoBackIcon } from '../../../components/atoms/GoBackIcon';
 import { useNavigation, useRoute } from '@react-navigation/native';
 

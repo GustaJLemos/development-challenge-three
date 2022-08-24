@@ -17,8 +17,6 @@ export function ListItems({categoryItem, selectedItens}: Props) {
   const [itens, setItens] = useState<Item[]>([]);
 
   function saveSelectedItem(item: Item) {
-    // const newItem: Item = item
-      // const newArray: Item[] = [itens, newItem]
     setItens([...itens, item])
   }
 
@@ -28,8 +26,6 @@ export function ListItems({categoryItem, selectedItens}: Props) {
         return arrayItem;
       }
     })
-    // const newItem: Item = item
-      // const newArray: Item[] = [itens, newItem]
     setItens(newItens)
   }
 
@@ -57,9 +53,6 @@ export function ListItems({categoryItem, selectedItens}: Props) {
                 item={item}
                 itemSelected={(item) => saveSelectedItem(item)}
                 itemToDeselect={(item) => unsaveSelectedItem(item)}
-                // selectItem={(itemSelected) => handleSelectItemById(itemSelected)}
-                // selectedItem={selectedItems}
-                // checked={item.id === selectedItems[0].id}
               />
               )
           })

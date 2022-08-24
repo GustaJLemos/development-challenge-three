@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { Dimensions, FlatList, Modal, ScrollView, View } from 'react-native';
 import ActionSheet, { SheetManager } from 'react-native-actions-sheet';
@@ -9,7 +9,6 @@ import { Typography } from '../../../components/molecules/Typography';
 import { Button } from '../../../components/molecules/Button';
 import { ListItems } from '../../../components/organisms/ListItems';
 import { ItemQuantity } from '../../../components/organisms/ItemQuantity';
-import { CategoryItem } from '../../../components/organisms/CategoryItem';
 import { responsiveSize } from '../../../utils/responsiveSize';
 
 import { COLORS } from '../../../global/styles';
@@ -25,11 +24,8 @@ import { Category } from '../../../types/Category';
 import { ItemList } from '../../../types/ItemList';
 import { Item } from '../../../types/Item';
 import { recipeService } from '../../../http/services/recipeService';
-import { RequestItem } from '../../../http/types/RequestItem';
-import { Recipe } from '../../../types/Recipe';
 import { Loading } from '../../../components/atoms/Loading';
 import { Logo } from '../../../components/atoms/Logo';
-import { RecipeList } from '../RecipeList';
 import PratoMacarraoSvg from '../../../assets/PratoMacarrao.svg';
 import { useNavigation } from '@react-navigation/native';
 import { ErrorMessage } from '../../../components/atoms/ErrorMessage';
