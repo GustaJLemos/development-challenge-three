@@ -30,11 +30,6 @@ export function QuantityButton({newQuantity, quantityType}: Props) {
     newQuantity(value);
   }
 
-  function handleEnterTheValue(newValue: number) {
-    setValue(newValue);
-    newQuantity(value);
-  }
-
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -46,17 +41,13 @@ export function QuantityButton({newQuantity, quantityType}: Props) {
         </Typography>
       </TouchableOpacity>
 
-      <TextInput
-        onChangeText={e => handleEnterTheValue(Number(e))}
-
-        keyboardType={'numeric'}
-        maxLength={4}
+      <View
         style={{marginHorizontal: responsiveSize(0.5)}}
       >
         <Typography style={{ color: COLORS.black10 }}>
           {`${value}${quantityType}`}
         </Typography>
-      </TextInput>
+      </View>
 
       <TouchableOpacity
         style={styles.button}
