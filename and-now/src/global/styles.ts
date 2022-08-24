@@ -5,6 +5,7 @@ export const COLORS = {
 
   salmon10: '#FF725E',
 
+  red1: '#FF4C32',
   red10: '#E8290E',
 
   white10: '#F8F8F8',
