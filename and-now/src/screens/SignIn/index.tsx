@@ -21,11 +21,6 @@ export function SignIn() {
 
   return (
     <>
-      <StatusBar
-        backgroundColor={COLORS.blue10}
-        translucent
-        hidden={true}
-      />
       <BackgroundWrapper>
         <LandingBackgroundSvg />
         <Typography
