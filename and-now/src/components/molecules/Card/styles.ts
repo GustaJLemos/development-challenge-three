@@ -5,11 +5,11 @@ import { responsiveSize } from '../../../utils/responsiveSize';
 export const styles = StyleSheet.create({
   container: {
     width: responsiveSize(33),
-    paddingVertical: responsiveSize(1),
+    height: responsiveSize(13),
+    paddingVertical: responsiveSize(0.5),
     paddingHorizontal: responsiveSize(2),
     borderRadius: 24,
     overflow: 'hidden',
-    backgroundColor: COLORS.blue10,
     flexDirection: 'row',
   },
   text: {
