@@ -1,6 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useContext } from "react";
+import { StatusBar } from "react-native";
 import { AuthContext } from "../contexts/Auth";
 import { COLORS } from "../global/styles";
 import { Home } from "../screens/Signed/Home";
@@ -12,6 +13,9 @@ export const AppRoutes = () => {
 
   return (
     <NavigationContainer>
+      <StatusBar
+        backgroundColor={COLORS.blue10}
+      />
       {isLogged ? <SignedRoutes /> : <SignIn />}
     </NavigationContainer>
   )
