@@ -11,6 +11,7 @@ import { Button } from '../../components/molecules/Button';
 
 import { COLORS } from '../../global/styles';
 import LandingBackgroundSvg from '../../assets/LandingBackground.svg';
+import { View } from 'react-native';
 
 export function SignIn() {
   const { setIsLogged } = useContext(AuthContext);
@@ -40,11 +41,14 @@ export function SignIn() {
           com os ingredientes {'\n'}
           disponíveis!
         </Typography>
-        <Button onPress={handleSignIn}>
-          <Typography>
-            Vamos começar
-          </Typography>
-        </Button>
+
+        <View style={{alignItems: 'center'}}>
+          <Button onPress={handleSignIn}>
+            <Typography>
+              Vamos começar
+            </Typography>
+          </Button>
+        </View>
       </BackgroundWrapper>
     </>
   );

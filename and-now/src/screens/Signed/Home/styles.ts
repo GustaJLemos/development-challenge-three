@@ -7,7 +7,8 @@ const { width, height } = Dimensions.get('screen');
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: responsiveSize(2),
+    paddingVertical: responsiveSize(2),
+    paddingHorizontal: responsiveSize(1),
     alignItems: 'center',
   },
   image: {
@@ -17,7 +18,6 @@ export const styles = StyleSheet.create({
   categorieItensList: {
     width: width,
     maxHeight: responsiveSize(16),
-    marginLeft: responsiveSize(2),
   },
   categorieItensContent: {
     paddingRight: responsiveSize(2),
@@ -51,6 +51,7 @@ export const styles = StyleSheet.create({
   emptyFlatList: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: responsiveSize(22)
+    height: responsiveSize(22),
+    marginHorizontal: responsiveSize(1),
   },
 });

@@ -7,3 +7,4 @@ export const styles = StyleSheet.create({
     padding: responsiveSize(2),
   }
 });
+

@@ -4,7 +4,7 @@ import { responsiveSize } from '../../../utils/responsiveSize';
 
 export const styles = StyleSheet.create({
   container: {
-    width: responsiveSize(33),
+    width: responsiveSize(32),
     height: responsiveSize(13),
     paddingVertical: responsiveSize(0.5),
     paddingHorizontal: responsiveSize(2),
