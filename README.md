@@ -1,6 +1,6 @@
 # Development challenge
 
-Opá tudo bom? Que bom que chegou até aqui! 
+Opa, tudo bom? Que bom que chegou até aqui! 
 
 Então... Esse é meu projeto, feito para resolver um problema proposto em uma entrevista. E qual era esse problema?
 
@@ -12,16 +12,16 @@ Gostaria de um aplicativo onde eu saiba de forma rápida e fácil o que posso fa
 
 O layout do projeto está disponível no <a href="https://www.figma.com/file/Y9nXkfZT74Z1u3lK0oteg9/Projeto-challenge-three">figma.</a> <br> (Lembrando que minhas habilidades com prototipação não são das melhores haha).
 
-Espero que tenha gostado, e tenha se divertido pelo menos um pouco com o projeto. 
+Espero que tenha gostado, e tenha se divertido pelo menos um pouco com o meu projeto. 
 
-Claro que essa é uma versão inicial. E o meu objetivo com esse projeto é justamente ir incrementando com o tempo. 
+Claro que essa é uma versão inicial. E o meu objetivo com esse projeto é justamente ir aprimorando com o tempo. 
 
 Atualmente estou usando mocks para "mostrar" as receitas, mas a idéia futura é justamente usar um banco de dados, contendo várias e várias receitas, para que realmente
-o usuário possa escolher os itens, e de acordo com isso as receitas serem exibidas. Mas isso é para um futuro não muito distante...
+o usuário possa escolher os itens e que, de acordo com isso, as receitas sejam exibidas. Mas isso é para um futuro não muito distante...
 
 Qualquer sugestão ou crítica é sempre bem vinda!
 
-Enfim, obrigado por ler até aqui, e aqui vai um guia rápidinho de como rodar o projeto na sua máquina.
+Enfim, obrigado por ler até aqui, e aqui vai um guia rapidinho de como rodar o projeto na sua máquina.
 
 ## Guia de como rodar o projeto:
 
